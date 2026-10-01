@@ -1,0 +1,27 @@
+from xmlrpc.server import SimpleXMLRPCServer
+
+
+def consultar_saldo(quantidade_inicial, quantidade_vendida):
+    return quantidade_inicial - quantidade_vendida
+
+
+servidor = SimpleXMLRPCServer(("localhost", 8002))
+
+servidor.register_function(
+    consultar_saldo,
+    "consultar_saldo"
+)
+
+print("Servidor RPC aguardando solicitações...")
+
+servidor.serve_forever()
+
+cliente.py
+from xmlrpc.client import ServerProxy
+
+
+servidor = ServerProxy("http://localhost:8002/")
+
+resultado = servidor.consultar_saldo(15, 4)
+
+print("Unidades restantes:", resultado)
